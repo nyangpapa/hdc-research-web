@@ -106,7 +106,7 @@
   .tab-btn{flex:1;padding:12px 16px;background:transparent;border:0;color:var(--ink-dim);font-family:inherit;font-size:14px;font-weight:600;border-radius:10px;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
   .tab-btn:hover{color:var(--ink);background:rgba(124,195,255,.06)}
   .tab-btn.active{background:linear-gradient(135deg,rgba(124,195,255,.18),rgba(155,231,196,.12));color:var(--ink);border:1px solid rgba(124,195,255,.35)}
-  .tab-btn.news.active{background:linear-gradient(135deg,rgba(255,184,107,.18),rgba(255,143,179,.12));border-color:rgba(255,184,107,.35)}
+  .tab-btn.collab.active{background:linear-gradient(135deg,rgba(155,231,196,.18),rgba(124,195,255,.12));border-color:rgba(155,231,196,.35)}
   .tab-content{display:none}
   .tab-content.active{display:block;animation:fade .25s ease}
   @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
@@ -143,7 +143,7 @@
 <!-- Tab navigation -->
 <nav class="tabs" role="tablist">
   <button class="tab-btn active" data-tab="fact" role="tab" aria-selected="true"> 1차 자료 (팩트)</button>
-  <button class="tab-btn news" data-tab="news" role="tab" aria-selected="false">📰 2차 정보 (뉴스 / 추정)</button>
+  <button class="tab-btn collab" data-tab="collab" role="tab" aria-selected="false"> 제로랩스 협업 구조</button>
 </nav>
 
 <div id="tab-fact" class="tab-content active">
@@ -574,246 +574,58 @@ flowchart TB
 
 </div><!-- /tab-fact -->
 
-<!-- News tab -->
-<div id="tab-news" class="tab-content">
 
-  <div class="disclaimer">
-    <b> 주의 — 이 탭은 2차 정보입니다</b><br/>
-    뉴스·블로그·업계 보도는 사실(fact)과 다를 수 있는 <b>해석·추정·간접 인용</b>이 섞여 있습니다. 1차 자료(회사 공식 자료, 정부 DB, 정부 등록정보)와 분리하여 별도 탭으로 정리합니다. 본 탭의 내용은 <b>참고용 컨텍스트</b>로만 활용하세요.
-  </div>
-
-  <!-- Direct mentions -->
+<!-- Collab tab -->
+<div id="tab-collab" class="tab-content">
   <section style="margin-top:0">
-    <h2 class="title">HDC를 직접 언급한 보도</h2>
-
-    <div class="news-card">
+    <h2 class="title">HDC × 제로랩스 5대 협업 구조</h2>
+    
+    <div class="news-card" style="border-left-color:#9be7c4">
       <div class="meta">
-        <span class="news-tag indirect">정정/약화</span>
-        <span>📰 NotePet (notepet.co.kr)</span>
-        <span>idx=11803</span>
+        <span class="news-tag" style="background:rgba(155,231,196,.15);color:#9be7c4">시너지 1</span>
+        <span>제조 역량</span>
       </div>
-      <h3>너도나도 펫푸드, 웃고 있는 OEM 사료업체들 — <span style="color:#ffb86b">재검증 결과 정정</span></h3>
-      <p>이 기사는 OEM 사료업체 트렌드를 다루나, <b>본문 정밀 재검증 결과 HDC는 명시적으로 거론되지 않음</b>. 검색 스니펫에 노출된 OEM 사례는:</p>
-      <ul style="color:var(--ink-dim);margin:6px 0;padding-left:20px">
-        <li><b>이레본(Irebon)</b> = 풀무원 아미오 + 한국인삼공사 지니펫 + 네츄럴코어 OEM</li>
-        <li><b>에이티바이오(AT-Bio)</b> = 목우촌 등 OEM</li>
-      </ul>
-      <p style="color:#ffb86b"> 따라서 이전에 본 보고서에서 인용한 "Notepet에서 HDC가 네츄럴코어 OEM으로 언급됨"은 <b>현 검색 결과로 재확인 불가</b>하며 약화된 단서로 분류함.</p>
-      <a class="src" href="https://www.notepet.co.kr/news/article/article_view/?idx=11803">notepet.co.kr/news/article/article_view/?idx=11803</a> (본문 fetch 타임아웃, 검색 스니펫만 확인)
+      <h3 style="color:#d6f5e6">HDC 자체 공장라인을 통한 제품 출시</h3>
+      <p>제로랩스의 신제품 기획력과 HDC의 대형 제조 인프라(레토르트, 습식 등)를 결합하여 안정적이고 퀄리티 높은 프리미엄 간식 라인업을 공동으로 출시합니다.</p>
     </div>
 
-    <div class="news-card">
+    <div class="news-card" style="border-left-color:#7cc3ff">
       <div class="meta">
-        <span class="news-tag indirect">간접 언급</span>
-        <span>📰 hdcpet.com 자체 공지·연혁</span>
+        <span class="news-tag" style="background:rgba(124,195,255,.15);color:#cfe6ff">시너지 2</span>
+        <span>미국 진출</span>
       </div>
-      <h3>회사 자체 연혁 (1차자료 분류이나 검증 한계로 여기 함께 표시)</h3>
-      <p>"2015 국내 최초 펫푸드 HACCP 인증", "2017 LG생활건강 공급계약", "2024 애경산업 공급계약 / 마드리드 IBERZOO+PROPET·방콕 PET FAIR SE ASIA 참가" 등은 <b>회사가 자체 표명한 정보</b>로, 외부 매체의 독립 검증 보도는 발견되지 않음.</p>
-      <a class="src" href="https://en.hdcpet.com/Corporate-history">en.hdcpet.com/Corporate-history</a>
+      <h3 style="color:#cfe6ff">FDA 인증을 통한 미국 수출</h3>
+      <p>HDC가 기확보한 공장 및 제품의 미국 FDA 인증 라인을 활용하여, 제로랩스의 트렌디한 펫푸드를 거대한 북미 시장에 즉각적으로 수출합니다.</p>
     </div>
 
-    <div class="news-card">
+    <div class="news-card" style="border-left-color:#ff8fb3">
       <div class="meta">
-        <span class="news-tag">검색 결과</span>
-        <span>네이버뉴스·다음뉴스·데일리벳·펫코노미 등 종합</span>
+        <span class="news-tag" style="background:rgba(255,143,179,.15);color:#ffd0e1">시너지 3</span>
+        <span>글로벌 확장</span>
       </div>
-      <h3>주요 매체에서 HDC 직접 보도 0건</h3>
-      <p>"에이치디씨 펫푸드", "hdcpet", "펠리쿠치나", "홋가이도푸즈", "Happy Dream Company" 키워드로 네이버뉴스·다음뉴스·데일리벳·펫코노미·농민신문·농수축산신문·한경·머투 등에서 검색 결과 <b>유의미한 기업 보도 0건</b>. 자사 홈페이지 공지사항 게시판도 비어있음 → <b>PR 채널 사실상 미운영</b>으로 해석됨.</p>
+      <h3 style="color:#ffd6e3">HDC 해외 수출망 활용</h3>
+      <p>미국 외에도 홍콩, 태국 등 HDC가 십수년간 개척해 둔 글로벌 현지 디스트리뷰터 파이프라인에 제로랩스 브랜드를 탑재시켜 아시아 시장에 동반 진출합니다.</p>
+    </div>
+
+    <div class="news-card" style="border-left-color:#ffb86b">
+      <div class="meta">
+        <span class="news-tag" style="background:rgba(255,184,107,.15);color:#ffd9ad">시너지 4</span>
+        <span>국내 세일즈</span>
+      </div>
+      <h3 style="color:#ffd9ad">국내 유통망 크로스</h3>
+      <p>HDC의 오프라인 B2B 거점(대형마트, 동물병원 등)과 제로랩스의 강력한 이커머스 B2C 세일즈 역량을 교환하여 전방위적인 국내 유통망을 장악합니다.</p>
+    </div>
+
+    <div class="news-card" style="border-left-color:#e6edf7">
+      <div class="meta">
+        <span class="news-tag" style="background:rgba(230,237,247,.15);color:#ffffff">시너지 5</span>
+        <span>마케팅</span>
+      </div>
+      <h3 style="color:#ffffff">인지도 높은 제품 콜라보</h3>
+      <p>대중적으로 인지도가 높은 브랜드나 IP와의 적극적인 콜라보레이션을 통해 양사의 화제성을 극대화하고, 신규 MZ세대 펫팸족 고객층을 폭발적으로 유입시킵니다.</p>
     </div>
   </section>
-
-  <!-- Industry context -->
-  <section>
-    <h2 class="title">시장 컨텍스트 보도 (HDC 직접 무관, 시장 일반)</h2>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag industry">시장 일반</span>
-        <span>📰 News1 (news1.kr)</span>
-      </div>
-      <h3>국내 펫푸드 시장 매출액 9000억원 … 온라인 판매 1위 로얄캐닌</h3>
-      <p>국내 펫푸드 시장 규모와 온라인 점유율 보도. HDC 직접 언급은 없으나, HDC 142억이 약 1.6% 점유에 해당함을 추정 가능.</p>
-      <a class="src" href="https://www.news1.kr/industry/general-industry/5419026">news1.kr/industry/general-industry/5419026</a>
-    </div>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag industry">시장 일반</span>
-        <span>📰 NewsSpace 랭킹연구소 (newsspace.kr)</span>
-      </div>
-      <h3>반려동물업체 TOP5 — 매출·이익·배당·로열티 '로얄캐닌', 영업손실·소송 '우리와', 내실 '하림펫'</h3>
-      <p>로얄캐닌(3,709억) > 한국마즈(1,832억) > 대주산업(1,060억) > 우리와(920억) > 하림펫푸드(521억). HDC는 TOP5 미포함 → <b>토종 7~8위권 추정</b>의 근거.</p>
-      <a class="src" href="https://www.newsspace.kr/news/article.html?no=2768">newsspace.kr/news/article.html?no=2768</a>
-    </div>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag industry">시장 일반</span>
-        <span>📰 CEOSCOREDAILY</span>
-      </div>
-      <h3>펫푸드 사업 쉽지 않네 … 대상·하림·GS리테일 자회사 수익성 확보 고전</h3>
-      <p>대기업 펫푸드 자회사들의 수익성 압박 보도. HDC의 <b>영업이익률 7.4~10.6%는 업계 평균 대비 양호</b>하다는 비교 컨텍스트 제공.</p>
-      <a class="src" href="https://m.ceoscoredaily.com/page/view/2024062011282490136">m.ceoscoredaily.com</a>
-    </div>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag industry">시장 일반</span>
-        <span>📰 풀무원 뉴스룸</span>
-      </div>
-      <h3>풀무원 아미오 두부 간식 매출 +171.4% 증가</h3>
-      <p>풀무원 펫 사업 자체 보도. HDC가 풀무원의 OEM 파트너인지는 본 기사에서 확인되지 않음 (자연한끼 두부간식과 HDC OEM 라인의 관계 불명).</p>
-      <a class="src" href="https://news.pulmuone.co.kr/pulmuone/newsroom/viewNewsroom.do?id=3492">news.pulmuone.co.kr</a>
-    </div>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag industry">규제 일반</span>
-        <span>📰 데일리벳 (dailyvet.co.kr)</span>
-      </div>
-      <h3>반려동물 수제간식, 사료 등록 꼭 해야</h3>
-      <p>국내 펫푸드 사료관리법상 사료제조업 등록 의무 규제 보도. HDC 안성공장도 동 규정 적용 대상이라는 컨텍스트.</p>
-      <a class="src" href="https://www.dailyvet.co.kr/news/industry/25914">dailyvet.co.kr/news/industry/25914</a>
-    </div>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag industry">규제 일반</span>
-        <span>📰 펫코노미 (petconomy.or.kr)</span>
-      </div>
-      <h3>반려동물 사료제조 공장도 'HACCP지정' 받을 수 있다</h3>
-      <p>사료 HACCP는 식품 HACCP와 별도 인증이며, 식품·사료를 동일 작업장에서 생산 시 각각 따로 인증 받아야 한다는 규제 보도. <b>HDC의 2015년 펫푸드 HACCP 인증의 의미</b>를 이해하는 컨텍스트.</p>
-      <a class="src" href="http://www.petconomy.or.kr/notification/notice/read.jsp?no=18">petconomy.or.kr</a>
-    </div>
-  </section>
-
-  <!-- Reports -->
-  <section>
-    <h2 class="title">정부·연구기관 산업 리포트</h2>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag report">산업 리포트</span>
-        <span>📑 KREI 한국농촌경제연구원</span>
-      </div>
-      <h3>R978 — 농식품산업 신성장동력 창출을 위한 펫푸드 산업 육성 과제 (2023.10)</h3>
-      <p>국내 펫푸드 산업 구조·규제·해외시장 분석 리포트. HDC 직접 언급은 미확인이나, 국내 토종 제조사의 OEM 의존 구조와 수출 다변화 필요성 등 HDC 포지셔닝 이해의 배경.</p>
-      <a class="src" href="https://repository.krei.re.kr/bitstream/2018.oak/30744/1/R978.pdf">repository.krei.re.kr/R978.pdf</a>
-    </div>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag report">해외 시장</span>
-        <span>📑 KATI (한국농수산식품유통공사)</span>
-      </div>
-      <h3>일본 펫푸드 시장 현황 및 한국산 펫푸드 진출안 조사</h3>
-      <p>일본 펫푸드安全法 규제·수입 절차·한국산 진출 사례 분석. HDC의 일본 진출(자체 표명 2012)이 <b>실제 일본어 검색에서 흔적이 없는</b> 점과 대조적인 컨텍스트.</p>
-      <a class="src" href="https://m.kati.net/">m.kati.net</a>
-    </div>
-
-    <div class="news-card">
-      <div class="meta">
-        <span class="news-tag report">해외 시장</span>
-        <span>📑 KOTRA</span>
-      </div>
-      <h3>한국 식품수출기업이 유의해야 할 일본 육가공품 수입 규제</h3>
-      <p>일본 육가공품 수입 규제. 펠리쿠치나·모정 등 육류 사료의 일본 수출 시 적용되는 규제 컨텍스트.</p>
-      <a class="src" href="https://dream.kotra.or.kr/">dream.kotra.or.kr</a>
-    </div>
-  </section>
-
-  <!-- Synthesis -->
-  <section>
-    <h2 class="title">뉴스·2차 정보 종합 평가</h2>
-    <div class="panel">
-      <ul style="margin:0;padding-left:18px;color:var(--ink-dim);line-height:1.8">
-        <li><b style="color:#ffb86b">PR 노출 거의 없음</b> — 주요 매체에서 HDC 직접 보도 0건. 자사 공지사항도 비어있음. B2B/OEM 중심 사일런트 운영 추정.</li>
-        <li><b style="color:#ffb86b">간접 언급 1건</b> — NotePet "OEM 사료업체" 기사에 네츄럴코어 등의 파트너로 언급. <b>이 한 줄이 OEM 활동의 외부 검증 거의 유일한 단서</b>.</li>
-        <li><b style="color:#ffb86b">시장 컨텍스트는 풍부</b> — 국내 펫푸드 시장(9000억)·TOP5 랭킹·대기업 수익성 압박 등 산업 보도는 다수. 단, HDC를 직접 다룬 내용은 아님.</li>
-        <li><b style="color:#ffb86b">자체 표명 vs 외부 검증 갭</b> — 회사 연혁의 LG생건·CJ·동원F&amp;B·애경 OEM 계약, 일본·미국 수출은 <b>독립 매체에서 보도된 적 없음</b>. 사실 검증을 위해서는 거래처 측 PB 라벨·관세 데이터 추가 조사 필요.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- BIGKinds search matrix -->
-  <section>
-    <h2 class="title">BIGKinds·전문매체 정밀 검색 매트릭스</h2>
-    <div class="panel">
-      <p style="color:var(--ink-dim);margin:0 0 12px">한국 언론·매체 16곳을 사업자번호·옛 사명·브랜드명·대표자명 조합으로 정밀 검색한 결과:</p>
-      <table class="products">
-        <thead><tr><th>검색 소스</th><th>키워드</th><th>결과</th></tr></thead>
-        <tbody>
-          <tr><td>Google 일반</td><td>"홋가이도푸즈" 펫푸드 안성</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>Google 일반</td><td>"펠리쿠치나" + 에이치디씨</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span> (유통몰만)</td></tr>
-          <tr><td>Google 일반</td><td>"129-81-68275" 사업자번호 직검색</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>Google "에이치디씨" 김가종 손창덕</td><td>대표자명 조합</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span> (사람인·잡코리아만)</td></tr>
-          <tr><td>site:dailyvet.co.kr</td><td>펠리쿠치나/에이치디씨/홋가이도푸즈</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:news.naver.com</td><td>펠리쿠치나 펫푸드</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:newsspace.kr</td><td>"에이치디씨" 펫푸드</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:petconomy.or.kr</td><td>에이치디씨 펠리쿠치나</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:notepet.co.kr (직접 검색)</td><td>에이치디씨/펠리쿠치나/아스쿠</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:newspet.co.kr</td><td>에이치디씨</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:pet-news.or.kr</td><td>에이치디씨</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:koreadognews.co.kr</td><td>에이치디씨/홋가이도푸즈</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:nongmin.com</td><td>에이치디씨 펫푸드</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>site:mafra.go.kr</td><td>에이치디씨/펠리쿠치나</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>공정위·리콜·표시광고법</td><td>에이치디씨 펫</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span> (행정처분 0)</td></tr>
-          <tr><td>YouTube</td><td>"펠리쿠치나" / "Asuku" Korea</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>잡플래닛 47352 (홋가이도푸즈)</td><td>리뷰·면접·연봉 정보</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-        </tbody>
-      </table>
-      <p style="color:#ffb86b;font-size:14px;margin:14px 0 0">
-         <b>PR 노출 등급: 사실상 "무(無)"</b>. 매출 140억대·직원 100명대·고용부 강소기업 지정 회사임에도 어떤 매체에서도 단독 기사 0건. 행정처분/리콜 이력도 0건.
-      </p>
-    </div>
-  </section>
-
-  <!-- KIPRIS workaround attempt -->
-  <section>
-    <h2 class="title">KIPRIS 우회 시도 결과 (특허·상표·디자인)</h2>
-    <div class="panel">
-      <table class="products">
-        <thead><tr><th>우회 경로</th><th>결과</th></tr></thead>
-        <tbody>
-          <tr><td>Google site:kipris.or.kr / plus.kipris.or.kr</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span> (안내 페이지만)</td></tr>
-          <tr><td>Google Patents API (assignee=에이치디씨/홋가이도푸즈/Hokkaido Foods/Happy Dream Company, A23K, inventor=손창덕)</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건</span></td></tr>
-          <tr><td>Wayback Machine (web.archive.org)</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">차단</span></td></tr>
-          <tr><td>WIPO Global Brand DB (branddb.wipo.int)</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">CAPTCHA 차단</span></td></tr>
-          <tr><td>TMView (tmdn.org/tmview)</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">JS 보호 빈응답</span></td></tr>
-          <tr><td>markinfo.kr / doomark.com</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">404 / 도메인 만료</span></td></tr>
-          <tr><td>USPTO TESS / EUIPO eSearch / JPO J-PlatPat</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">CAPTCHA 차단</span></td></tr>
-          <tr><td>브랜드명(Felicucina/펠리쿠치나/슈퍼본/모정/맘스큐브/헬씨미요/훌루/진자사) 일반 검색</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">출원·등록 정보 0</span></td></tr>
-        </tbody>
-      </table>
-      <p style="color:var(--ink-dim);font-size:13px;margin:14px 0 0">
-        Google Patents에 잡힌 "에이치디씨" 명의 특허 ~107건은 모두 <b>HDC그룹 계열사</b>(현대산업개발·HDC인포·HDC폴리올·HDC현대EP)로, 공조시스템·PPS 수지·금속3D프린팅 등 전혀 다른 분야. 펫푸드 HDC 명의의 IP는 <b>공개 인덱스 어디에도 흔적 없음</b>.
-      </p>
-      <p style="color:#ffb86b;font-size:14px;margin:8px 0 0">
-         <b>해석 가능성</b>: ① IP를 출원하지 않고 영업비밀·HACCP 인증·OEM 계약으로만 운영, ② 공동출원·계열법인·대표 개인 명의로 출원, ③ KIPRIS에만 등록되어 외부 인덱싱 안됨. 확정에는 <b>KIPRIS 직접 로그인 검색이 필수</b>.
-      </p>
-    </div>
-  </section>
-
-  <!-- VN/ID/TH government DB direct query summary (in news tab as it concerns interpretation) -->
-  <section>
-    <h2 class="title">동남아 3개국 정부 사료 DB 직접 조회 (2차 정보)</h2>
-    <div class="panel">
-      <p style="color:var(--ink-dim);margin:0 0 8px">팩트 탭의 "수출 라이선스" 추론을 정부 DB로 직접 검증 시도한 결과:</p>
-      <table class="products">
-        <thead><tr><th>국가</th><th>DB</th><th>결과</th></tr></thead>
-        <tbody>
-          <tr><td>🇻🇳 베트남</td><td>MARD dvc.mard.gov.vn</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">timeout</span></td></tr>
-          <tr><td>🇮🇩 인니</td><td>Ditjen PKH SIMPOL (443건 검토)</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건 매칭</span></td></tr>
-          <tr><td>🇹🇭 태국</td><td>DLD efeed (라이선스 조회)</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">0건 매칭</span></td></tr>
-        </tbody>
-      </table>
-      <p style="color:var(--ink-dim);font-size:13px;margin:14px 0 0">
-         <b>해석</b>: 정부 DB는 통상 <b>현지 수입자(distributor) 명의</b>로 등록되므로 "HDC/Felicucina" 키워드만으로는 누락 가능성. 실제 등록은 Pet Line HK · Taily Buddy TH · Vina Leaders VN 등 현지 수입자 상호로 되어있을 것으로 추정. 정확 확인을 위해서는 각국 부처 직접 문의 필요(태국 afvc.nsw@dld.go.th 등).
-      </p>
-    </div>
-  </section>
-
-</div><!-- /tab-news -->
+</div><!-- /tab-collab -->
 
 <footer>
   <div class="src">
