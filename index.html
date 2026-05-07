@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>(주)에이치디씨 H.D.C — 회사 조사 시각화</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+  :root{
+    --bg:#0b0f17;
+    --panel:#121826;
+    --panel-2:#161d2e;
+    --line:#1f2940;
+    --ink:#e6edf7;
+    --ink-dim:#9aa6bd;
+    --accent:#7cc3ff;
+    --accent-2:#9be7c4;
+    --warn:#ffb86b;
+    --pink:#ff8fb3;
+    --grad:linear-gradient(135deg,#7cc3ff,#9be7c4);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',system-ui,-apple-system,sans-serif;line-height:1.55}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:1200px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{
+    background:radial-gradient(1200px 400px at 20% -10%,rgba(124,195,255,.18),transparent 60%),
+               radial-gradient(800px 300px at 90% 0%,rgba(155,231,196,.14),transparent 60%),
+               linear-gradient(180deg,#0d1320,#0b0f17);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:34px 32px;
+    margin-bottom:28px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;
+    background:var(--grad);filter:blur(70px);opacity:.18;
+  }
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
+  h1{font-size:40px;line-height:1.15;margin:8px 0 6px;font-weight:900;letter-spacing:-.02em}
+  h1 .en{color:var(--ink-dim);font-weight:500;font-size:22px;letter-spacing:0}
+  .tagline{color:var(--ink-dim);max-width:780px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{background:rgba(124,195,255,.1);border:1px solid rgba(124,195,255,.25);color:#cfe6ff;padding:6px 12px;border-radius:999px;font-size:13px}
+  .chip.warn{background:rgba(255,184,107,.1);border-color:rgba(255,184,107,.3);color:#ffd9ad}
+
+  .grid{display:grid;gap:18px}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+  @media (max-width:780px){.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .card h2{margin:0 0 6px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);font-weight:600}
+  .stat{font-size:32px;font-weight:800;letter-spacing:-.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat-sub{color:var(--ink-dim);font-size:13px;margin-top:4px}
+
+  section{margin-top:36px}
+  section h2.title{font-size:22px;font-weight:800;letter-spacing:-.01em;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+  section h2.title::before{content:"";width:8px;height:22px;border-radius:4px;background:var(--grad)}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .mermaid{background:#0e1422;border:1px dashed #243049;border-radius:12px;padding:14px;overflow-x:auto}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;color:var(--ink-dim);font-size:13px;margin-top:10px}
+  .swatch{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:middle}
+
+  .timeline{position:relative;padding-left:22px;margin:0}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,#7cc3ff,#9be7c4)}
+  .tl-item{position:relative;padding:6px 0 14px}
+  .tl-item::before{content:"";position:absolute;left:-19px;top:11px;width:10px;height:10px;border-radius:50%;background:#9be7c4;box-shadow:0 0 0 3px rgba(155,231,196,.18)}
+  .tl-year{font-weight:800;color:#cfe6ff;margin-right:8px}
+  .tl-tag{display:inline-block;font-size:11px;color:#0b0f17;background:#9be7c4;padding:1px 7px;border-radius:6px;margin-left:6px;font-weight:700}
+  .tl-tag.b{background:#7cc3ff}
+  .tl-tag.p{background:#ff8fb3}
+
+  .partners{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:780px){.partners{grid-template-columns:repeat(2,1fr)}}
+  .partner{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .partner b{display:block;font-size:15px}
+  .partner small{color:var(--ink-dim)}
+
+  table.products{width:100%;border-collapse:collapse;font-size:14px}
+  table.products th,table.products td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  table.products th{color:var(--ink-dim);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+  table.products tr:hover td{background:rgba(124,195,255,.04)}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line);color:var(--ink-dim);margin-right:4px}
+  .pill.dog{border-color:#7cc3ff66;color:#7cc3ff}
+  .pill.cat{border-color:#ff8fb366;color:#ff8fb3}
+  .pill.both{border-color:#9be7c466;color:#9be7c4}
+
+  .map{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  @media (max-width:780px){.map{grid-template-columns:repeat(3,1fr)}}
+  .country{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .country .flag{font-size:28px}
+  .country .yr{display:block;color:var(--ink-dim);font-size:12px;margin-top:4px}
+
+  footer{margin-top:48px;color:var(--ink-dim);font-size:12px;text-align:center}
+  .src a{margin:0 6px}
+
+  /* Tabs */
+  .tabs{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px;margin-bottom:24px;position:sticky;top:12px;z-index:50;backdrop-filter:blur(8px)}
+  .tab-btn{flex:1;padding:12px 16px;background:transparent;border:0;color:var(--ink-dim);font-family:inherit;font-size:14px;font-weight:600;border-radius:10px;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .tab-btn:hover{color:var(--ink);background:rgba(124,195,255,.06)}
+  .tab-btn.active{background:linear-gradient(135deg,rgba(124,195,255,.18),rgba(155,231,196,.12));color:var(--ink);border:1px solid rgba(124,195,255,.35)}
+  .tab-btn.collab.active{background:linear-gradient(135deg,rgba(155,231,196,.18),rgba(124,195,255,.12));border-color:rgba(155,231,196,.35)}
+  .tab-content{display:none}
+  .tab-content.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .disclaimer{background:linear-gradient(135deg,rgba(255,184,107,.08),rgba(255,143,179,.06));border:1px solid rgba(255,184,107,.3);border-radius:14px;padding:18px 20px;margin-bottom:22px;color:#ffd9ad}
+  .disclaimer b{color:#ffb86b}
+  .news-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;border-left:4px solid #ffb86b}
+  .news-card .meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px;color:var(--ink-dim);font-size:12px}
+  .news-card h3{margin:6px 0 8px;font-size:16px;color:var(--ink)}
+  .news-card p{margin:6px 0;color:var(--ink-dim);font-size:14px}
+  .news-card .src{font-size:12px;color:var(--accent)}
+  .news-tag{display:inline-block;padding:2px 8px;border-radius:6px;background:rgba(255,184,107,.15);color:#ffd9ad;font-size:11px;font-weight:700;letter-spacing:.05em}
+  .news-tag.industry{background:rgba(124,195,255,.15);color:#cfe6ff}
+  .news-tag.report{background:rgba(155,231,196,.15);color:#9be7c4}
+  .news-tag.indirect{background:rgba(255,143,179,.15);color:#ffd0e1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Company Research · 2026-05-08</div>
+  <h1>(주)에이치디씨 <span class="en">H.D.C — Happy.Dream.Company</span></h1>
+  <p class="tagline">국내 최초 펫푸드 HACCP 인증을 받은 안성 기반의 반려동물 사료·간식 전문 제조사. 자체 브랜드 <b>펠리쿠치나</b>를 비롯해 CJ제일제당·풀무원·LG생활건강·동원F&amp;B·애경산업 등 국내 메이저 OEM 레퍼런스를 보유.</p>
+  <div class="meta">
+    <span class="chip">설립 2003 (2018 사명 변경)</span>
+    <span class="chip">경기 안성 · 장원산업단지</span>
+    <span class="chip">대표 김가종 · 손창덕</span>
+    <span class="chip">사업자 129-81-68275</span>
+    <span class="chip warn"> HDC현대산업개발과 무관</span>
+  </div>
+</header>
+
+<!-- Tab navigation -->
+<nav class="tabs" role="tablist">
+  <button class="tab-btn active" data-tab="fact" role="tab" aria-selected="true"> 1차 자료 (팩트)</button>
+  <button class="tab-btn collab" data-tab="collab" role="tab" aria-selected="false"> 제로랩스 협업 구조</button>
+</nav>
+
+<div id="tab-fact" class="tab-content active">
+
+<!-- KPI -->
+<div class="grid cols-3">
+  <div class="card">
+    <h2>연 매출 (2025)</h2>
+    <div class="stat">141.8억원</div>
+    <div class="stat-sub">3년 추이 138.6 → 137.5 → 141.8 (정체)</div>
+  </div>
+  <div class="card">
+    <h2>임직원 수</h2>
+    <div class="stat">63~108명</div>
+    <div class="stat-sub">사람인 63 · 잡코리아 108 (계약직 포함 추정)</div>
+  </div>
+  <div class="card">
+    <h2>부채비율 (2025)</h2>
+    <div class="stat" style="background:linear-gradient(135deg,#ffb86b,#ff8fb3);-webkit-background-clip:text;background-clip:text">82.3%</div>
+    <div class="stat-sub" style="color:#ffd9ad">3년간 32% → 82% (2.5배 급등)</div>
+  </div>
+</div>
+
+<!-- Public ratings / badges -->
+<div class="grid cols-3" style="margin-top:18px">
+  <div class="card" style="border-color:#9be7c466">
+    <h2 style="color:#9be7c4">고용노동부 인증</h2>
+    <div style="font-size:22px;font-weight:800;color:#d6f5e6;margin-top:6px">강소기업 지정</div>
+    <div class="stat-sub">출처: 잡코리아 hokaido05 페이지</div>
+  </div>
+  <div class="card" style="border-color:#7cc3ff66">
+    <h2 style="color:#7cc3ff">신용등급</h2>
+    <div style="font-size:22px;font-weight:800;color:#cfe6ff;margin-top:6px">우수</div>
+    <div class="stat-sub">잡코리아 기업정보 표기</div>
+  </div>
+  <div class="card" style="border-color:#7cc3ff66">
+    <h2 style="color:#7cc3ff">동종업계 순위</h2>
+    <div style="font-size:22px;font-weight:800;color:#cfe6ff;margin-top:6px">20위 (펫푸드 제조)</div>
+    <div class="stat-sub">잡코리아 자체 평가</div>
+  </div>
+</div>
+
+<!-- 3-year financials -->
+<section>
+  <h2 class="title">재무 3년 추이 (잡코리아 hokaido05 + 사람인 교차)</h2>
+  <div class="panel">
+    <table class="products">
+      <thead><tr><th>항목</th><th>2023</th><th>2024</th><th>2025</th><th>추세</th></tr></thead>
+      <tbody>
+        <tr><td>매출액</td><td>138.6억</td><td>137.5억</td><td>141.8억</td><td><span class="pill">정체</span></td></tr>
+        <tr><td>영업이익</td><td>14.65억</td><td>10.12억</td><td>12.35억</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">압박</span></td></tr>
+        <tr><td>영업이익률</td><td>10.6%</td><td>7.4%</td><td>8.7%</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">압박</span></td></tr>
+        <tr><td>당기순이익</td><td>11.86억</td><td>9.51억</td><td>10.79억</td><td><span class="pill">정체</span></td></tr>
+        <tr><td>총자산</td><td>119.8억</td><td>133.7억</td><td>176.2억</td><td><span class="pill" style="border-color:#9be7c4;color:#9be7c4">증가</span></td></tr>
+        <tr><td>총부채</td><td>29.2억</td><td>47.9억</td><td>79.6억</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">급증</span></td></tr>
+        <tr><td><b>부채비율</b></td><td><b>32.3%</b></td><td><b>55.8%</b></td><td><b>82.3%</b></td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3"> 2.5배</span></td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--ink-dim);font-size:13px;margin:10px 0 0"> 매출은 정체(138~142억), 영업이익률은 10.6→7.4→8.7%로 압박, 부채비율은 3년간 32→82%로 2.5배 급등. 2024 레토르트 신설비 등 설비투자 차입 확대로 추정.</p>
+    <p style="color:var(--ink-dim);font-size:12px;margin:6px 0 0"> 잡코리아·사람인엔 동명 다른 회사들(HDC지주, 시흥 화학, 자동차부품 등) 多. 본 데이터는 사업자번호 129-81-68275 기준.</p>
+  </div>
+</section>
+
+<!-- Competitor comparison -->
+<section>
+  <h2 class="title">국내 펫푸드 경쟁사 비교</h2>
+  <div class="panel">
+    <table class="products">
+      <thead><tr><th>회사</th><th>최근 매출</th><th>주력 카테고리</th><th>HDC 대비 배수</th></tr></thead>
+      <tbody>
+        <tr><td>로얄캐닌코리아 (수입)</td><td>3,709억</td><td>처방식·드라이</td><td>26x</td></tr>
+        <tr><td>한국마즈 (수입)</td><td>1,832억</td><td>페디그리·셰바</td><td>13x</td></tr>
+        <tr><td><b>대주산업</b> (토종 1위)</td><td>1,060억</td><td>드라이·OEM</td><td>7.5x</td></tr>
+        <tr><td>우리와 (이지듀)</td><td>850억</td><td>사료·간식</td><td>6.0x</td></tr>
+        <tr><td>하림펫푸드</td><td>521억</td><td>휴먼그레이드 드라이</td><td>3.7x</td></tr>
+        <tr style="background:rgba(124,195,255,.06)"><td><b>HDC (에이치디씨)</b></td><td><b>142억</b></td><td><b>반습식·간식 (자체+OEM)</b></td><td>1.0x</td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--ink-dim);font-size:13px;margin:10px 0 0"> 토종 7~8위권. 하림펫푸드 매출 27% 수준. <b>반습식·소프트 프리미엄 틈새</b> 포지셔닝 (펫프렌즈·강아지대통령 등 펫스페셜티 채널). 네츄럴코어 등 OEM 파트너로도 활동(notepet 보도).</p>
+  </div>
+</section>
+
+<!-- Real-world export penetration -->
+<section>
+  <h2 class="title">국가별 현지 시장 진출 실태 (현지어 교차검증)</h2>
+  <div class="panel">
+    <table class="products">
+      <thead><tr><th>국가</th><th>강도</th><th>핵심 디스트리뷰터 / 채널</th><th>가격대</th><th>실제 노출</th></tr></thead>
+      <tbody>
+        <tr><td> 홍콩</td><td>★★★★★</td><td><b>Pet Line 寵寵線</b> (25개 매장, 침사추이·올림피안시티)</td><td>HK$248/1.2kg</td><td><span class="pill" style="border-color:#9be7c4;color:#9be7c4">활발</span></td></tr>
+        <tr><td> 태국</td><td>★★★★</td><td>Taily Buddy·PetClub·HomePro·Ketawa<br/><b>Lazada Seller "H.D.C" 직접 운영</b></td><td>990 THB/1.2kg</td><td><span class="pill" style="border-color:#9be7c4;color:#9be7c4">활발</span></td></tr>
+        <tr><td> 인니</td><td>★★</td><td>Shopee.co.id 셀러 1곳 (i.242384260)</td><td>-</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">약함</span></td></tr>
+        <tr><td> 베트남</td><td>★</td><td>Vina Leaders (Picenza VN 계열) — 상품페이지 1개</td><td>-</td><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b">매우 약함</span></td></tr>
+        <tr><td> 일본</td><td>☆</td><td><b>미확인</b> — Amazon.co.jp·楽天·Yahoo!ショッピング 0건<br/>Tricco International(한국 펫푸드 일본 전문 수입사)도 미취급</td><td>-</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">흔적 없음</span></td></tr>
+        <tr><td> 미국</td><td>☆</td><td><b>미확인</b> — Amazon·Chewy·Petco·Walmart 0건<br/>Global Pet Expo·SuperZoo 참가 기록 없음</td><td>-</td><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3">흔적 없음</span></td></tr>
+      </tbody>
+    </table>
+    <div class="card" style="margin-top:14px;border-color:#ffb86b66">
+      <h2 style="color:#ffb86b"> 핵심 통찰</h2>
+      <ul style="margin:6px 0 0;padding-left:18px;color:#ffd9ad">
+        <li>"6개국 진출"은 사실이지만 <b>강도 격차가 매우 큼</b></li>
+        <li>실제 활성 시장은 <b>홍콩·태국 두 곳</b> — 두 시장 모두 펠리쿠치나 반습식 1.2kg이 주력 SKU</li>
+        <li>인니·베트남은 명목 수준의 진입</li>
+        <li><b>일본·미국은 자체 표명에도 불구하고 검증 가능한 시장 흔적이 거의 없음</b> → B2B 소량 OEM 또는 시범수출 추정</li>
+        <li>태국 Lazada에 Seller 표기가 "H.D.C"로 직접 노출 → <b>HDC가 태국에서 직접 판매 채널 운영</b> 가능성</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Press / R&D -->
+<section>
+  <h2 class="title">언론·정부 R&amp;D 수혜 — 거의 없음</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <h2>언론 보도</h2>
+      <p style="color:var(--ink-dim);margin:6px 0">네이버·다음·데일리벳·펫코노미 등에서 <b>유의미한 기업 보도 0건</b>. PR 채널 사실상 미운영. B2B·OEM 중심 전략으로 노출 최소화하는 구조로 추정.</p>
+    </div>
+    <div class="card">
+      <h2>정부 R&amp;D 수혜</h2>
+      <p style="color:var(--ink-dim);margin:6px 0">NTIS에 "(주)에이치디씨" 과제 2건은 <b>자동차부품 동명이인 회사</b>(수소차 냉각파이프). 펫푸드 HDC 명의 R&amp;D 수혜·중기부 지원·aT 사업 공개 기록 없음.</p>
+    </div>
+  </div>
+</section>
+
+<!-- KIPRIS limitation -->
+<section>
+  <h2 class="title">특허·상표 (KIPRIS 한계)</h2>
+  <div class="panel">
+    <p style="color:var(--ink-dim);margin:0 0 8px">KIPRIS·KIPRIS Plus는 <b>JS+세션쿠키+웹방화벽</b> 보호로 자동 검색 불가. Google Patents에선 HDC그룹 동명사(현대산업개발·현대이피·아이콘트롤스 등) 노이즈만 검출. HDC 펫푸드 또는 옛 사명 <b>홋가이도푸즈</b> 명의의 특허·상표·디자인 출원번호는 외부 인덱스로 회수 실패.</p>
+    <p style="color:var(--ink-dim);margin:0">✅ <b>권장</b>: KIPRIS(<a href="https://www.kipris.or.kr">kipris.or.kr</a>) 브라우저 직접 접속 → 출원인 "주식회사 에이치디씨" 또는 "홋가이도푸즈"로 검색</p>
+  </div>
+</section>
+
+<!-- Business flow -->
+<section>
+  <h2 class="title">비즈니스 플로우 (Value Chain)</h2>
+  <div class="panel">
+    <div class="mermaid">
+flowchart LR
+  classDef src fill:#1c2438,stroke:#7cc3ff,color:#cfe6ff;
+  classDef mfg fill:#102233,stroke:#9be7c4,color:#d6f5e6;
+  classDef brand fill:#231a2c,stroke:#ff8fb3,color:#ffd6e3;
+  classDef oem fill:#2a2317,stroke:#ffb86b,color:#ffd9ad;
+  classDef ch fill:#0f1c2a,stroke:#7cc3ff,color:#cfe6ff;
+  classDef exp fill:#1a2a1f,stroke:#9be7c4,color:#d6f5e6;
+
+  R[휴먼그레이드 원료<br/>신선육·곡물·해산물]:::src
+  RD[자체 R&amp;D 센터]:::src
+  F[안성 자체공장<br/>HACCP 인증<br/>저온가공·세미모이스트·레토르트]:::mfg
+
+  R --> F
+  RD --> F
+
+  F --> B[자체 브랜드]:::brand
+  F --> O[OEM / ODM]:::oem
+  F --> X[해외 수출]:::exp
+
+  B --> B1[펠리쿠치나<br/>Felicucina]:::brand
+  B --> B2[모정 · 슈퍼본<br/>맘스큐브 · 헬씨미요<br/>훌루 · 솜솜 · 진자사츄르]:::brand
+  B1 --> C1[B2C: hdcpet.com]:::ch
+  B2 --> C2[B2B 도매몰<br/>hdcbiz.imweb.me]:::ch
+  B2 --> C3[이마트 등 대형마트]:::ch
+  B2 --> C4[CHD<br/>동물병원 전용]:::ch
+
+  O --> O1[CJ제일제당]:::oem
+  O --> O2[풀무원]:::oem
+  O --> O3[LG생활건강]:::oem
+  O --> O4[동원F&amp;B]:::oem
+  O --> O5[애경산업]:::oem
+
+  X --> X1[홍콩 2007]:::exp
+  X --> X2[일본 2012]:::exp
+  X --> X3[미국 2019]:::exp
+  X --> X4[태국·인도네시아 2021]:::exp
+  X --> X5[베트남 2022]:::exp
+    </div>
+    <div class="legend">
+      <span><span class="swatch" style="background:#7cc3ff"></span>원료/유통</span>
+      <span><span class="swatch" style="background:#9be7c4"></span>제조·수출</span>
+      <span><span class="swatch" style="background:#ff8fb3"></span>자체 브랜드</span>
+      <span><span class="swatch" style="background:#ffb86b"></span>OEM 파트너</span>
+    </div>
+  </div>
+</section>
+
+<!-- Org / capability -->
+<section>
+  <h2 class="title">조직·역량 구조</h2>
+  <div class="panel">
+    <div class="mermaid">
+flowchart TB
+  classDef root fill:#0f1c2a,stroke:#7cc3ff,color:#cfe6ff,stroke-width:2px;
+  classDef dep fill:#161d2e,stroke:#1f2940,color:#e6edf7;
+  classDef leaf fill:#0e1422,stroke:#243049,color:#9aa6bd;
+
+  CEO["(주)에이치디씨<br/>대표: 김가종 · 손창덕"]:::root
+
+  CEO --> RD[R&amp;D 본부<br/>제품개발·안전성평가]:::dep
+  CEO --> PROD[생산본부<br/>안성 공장 · HACCP]:::dep
+  CEO --> SALES[영업본부]:::dep
+  CEO --> EXP[수출사업부]:::dep
+  CEO --> SUP[경영지원]:::dep
+
+  PROD --> P1[세미모이스트 라인]:::leaf
+  PROD --> P2[레토르트 라인]:::leaf
+  PROD --> P3[저온가공 져키 라인]:::leaf
+
+  SALES --> S1[자체 브랜드<br/>B2C/B2B]:::leaf
+  SALES --> S2[OEM/ODM 영업]:::leaf
+  SALES --> S3[유통: 이마트·CHD<br/>동물병원]:::leaf
+
+  EXP --> E1[아시아: 홍콩·일본<br/>태국·인니·베트남]:::leaf
+  EXP --> E2[북미: 미국]:::leaf
+  EXP --> E3[해외 박람회<br/>IBERZOO+PROPET<br/>PET FAIR SE ASIA]:::leaf
+    </div>
+  </div>
+</section>
+
+<!-- Partners -->
+<section>
+  <h2 class="title">주요 거래처 (확인된 OEM·유통 파트너)</h2>
+  <div class="partners">
+    <div class="partner"><b>이마트</b><small>2009 입점 · 대형마트</small></div>
+    <div class="partner"><b>CHD</b><small>2010 · 동물병원 전용</small></div>
+    <div class="partner"><b>풀무원</b><small>2013 공급계약</small></div>
+    <div class="partner"><b>CJ제일제당</b><small>2014 공급계약</small></div>
+    <div class="partner"><b>LG생활건강</b><small>2017 공급계약</small></div>
+    <div class="partner"><b>동원F&amp;B</b><small>2019 공급계약</small></div>
+    <div class="partner"><b>애경산업</b><small>2024 공급계약</small></div>
+    <div class="partner"><b>해외 바이어</b><small>홍콩·일본·미국·동남아</small></div>
+    <div class="partner" style="border-color:#9be7c466"><b>선진펫</b><small style="color:#9be7c4">제조원 표시 외부 검증<br/>(sunjinpet.com)</small></div>
+    <div class="partner"><b>건국유업</b><small>HDC 자사 영문 연혁 표기</small></div>
+  </div>
+
+  <div class="card" style="margin-top:14px;border-color:#9be7c466">
+    <h2 style="color:#9be7c4"> 외부 검증된 OEM 단서</h2>
+    <p style="margin:6px 0;color:#d6f5e6"><b>선진펫 도매몰(sunjinpet.com)</b> 제품 페이지에 "제조원: HDC(주)에이치디씨" 표기 확인.</p>
+    <p style="margin:6px 0;color:var(--ink-dim);font-size:13px">자사 진술 외 <b>매장 라벨 차원에서 OEM 활동을 직접 검증한 유일한 증거</b>. <a href="http://www.sunjinpet.com/shop/item.php?it_id=1519036910">sunjinpet.com 해당 상품</a></p>
+  </div>
+
+  <div class="card" style="margin-top:10px;border-color:#ffb86b66">
+    <h2 style="color:#ffb86b"> OEM 매핑의 한계 (정밀 조사 결과)</h2>
+    <ul style="margin:6px 0;padding-left:18px;color:#ffd9ad;line-height:1.7">
+      <li><b>위 거래처 7곳은 HDC 자사 연혁 페이지의 자기 진술</b>. PB 제품 단위 라벨 인용으로 직접 검증된 사례는 0건</li>
+      <li>한국 펫푸드 라벨은 "제조원" 대신 "판매원/제조판매원"만 표기하는 경우가 多 → 외부 매핑 본질적 어려움</li>
+      <li><b>모순</b>: HDC 영문 연혁에 "Aekyung Industry"로 표기된 부분이 일부 fetch에선 "Amorepacific"으로 반환 → <b>2024 거래처가 애경산업인지 아모레퍼시픽인지 표기 불일치</b>. 별도 검증 필요</li>
+      <li><b>이전에 단서로 제시했던 "네츄럴코어 OEM"은 정밀 재검증 결과 Notepet 본문에서 HDC 명시적 거론 미확인</b> (오히려 네츄럴코어=이레본 OEM으로 보도) → 약화</li>
+      <li>풀무원 아미오 핵심 사료·동원 뉴트리플랜은 다른 제조사(이레본·일본 수입) 보도가 더 구체적 → HDC가 만드는 SKU는 일부일 가능성</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section>
+  <h2 class="title">연혁 타임라인</h2>
+  <div class="panel">
+    <ul class="timeline">
+      <li class="tl-item"><span class="tl-year">2003</span>(주)홋가이도푸즈 설립</li>
+      <li class="tl-item"><span class="tl-year">2005</span>안성 공장 가동</li>
+      <li class="tl-item"><span class="tl-year">2007</span>홍콩 수출 개시 <span class="tl-tag">EXPORT</span></li>
+      <li class="tl-item"><span class="tl-year">2009</span>이마트 입점 <span class="tl-tag b">CHANNEL</span></li>
+      <li class="tl-item"><span class="tl-year">2010</span>CHD와 동물병원 전용 공급계약 <span class="tl-tag p">PARTNER</span></li>
+      <li class="tl-item"><span class="tl-year">2011</span>생산설비 증설</li>
+      <li class="tl-item"><span class="tl-year">2012</span>일본 수출 개시 <span class="tl-tag">EXPORT</span></li>
+      <li class="tl-item"><span class="tl-year">2013</span>풀무원 공급계약 <span class="tl-tag p">PARTNER</span></li>
+      <li class="tl-item"><span class="tl-year">2014</span>CJ제일제당 공급계약 <span class="tl-tag p">PARTNER</span></li>
+      <li class="tl-item"><span class="tl-year">2015</span><b>국내 최초 펫푸드 HACCP 인증 취득</b></li>
+      <li class="tl-item"><span class="tl-year">2017</span>신공장 완공 · LG생활건강 공급계약 <span class="tl-tag p">PARTNER</span></li>
+      <li class="tl-item"><span class="tl-year">2018</span>세미모이스트 라인 구축 · 펠리쿠치나 출시 · <b>사명 H.D.C로 변경</b></li>
+      <li class="tl-item"><span class="tl-year">2019</span>미국 시장 진출 · 동원F&amp;B 공급계약 <span class="tl-tag">EXPORT</span><span class="tl-tag p">PARTNER</span></li>
+      <li class="tl-item"><span class="tl-year">2021</span>레토르트 신설비 · 진자사 츄르 출시 · 태국·인도네시아 수출 <span class="tl-tag">EXPORT</span></li>
+      <li class="tl-item"><span class="tl-year">2022</span>베트남 수출 개시 <span class="tl-tag">EXPORT</span></li>
+      <li class="tl-item"><span class="tl-year">2024</span>애경산업 공급계약 · 헬씨케어 슬림 출시 · 해외박람회 참가(스페인·태국) <span class="tl-tag p">PARTNER</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- Products -->
+<section>
+  <h2 class="title">제품 라인업 (교차검증: hdcpet.com ↔ hdcbiz.imweb.me)</h2>
+  <div class="panel">
+    <table class="products">
+      <thead><tr><th>브랜드</th><th>대표 제품</th><th>형태</th><th>대상</th></tr></thead>
+      <tbody>
+        <tr><td><b>펠리쿠치나</b><br/><small>Felicucina</small></td><td>Beef Nutrition · Salmon Hypoallergenic · Duck Sensitive</td><td>세미모이스트 사료</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>헬씨케어 슬림</b></td><td>닭가슴살 100g · 소고기 100g</td><td>저칼로리 트릿(레토르트)</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>맘스큐브</b><br/><small>Mom's Cube</small></td><td>프리미엄(소+콜라겐/명태) · P/S/H(명태/연어/말고기)</td><td>큐브형 트릿</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>모정 · 모정 진</b></td><td>사슴져키 · 사슴+소고기 · 장어+소고기</td><td>져키</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>헬씨미요</b></td><td>소고기·가다랑어·멸치·참치·게</td><td>져키 / 슬림 라인</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>안심 프리미엄</b></td><td>소고기 · 연어</td><td>져키</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>훌루</b><br/><small>Hullu</small></td><td>가리비 · 게 · 키비나고</td><td>슬라이스 트릿</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>슈퍼본</b><br/><small>Super Bone</small></td><td>소고기/오리/연어 (관절·피부 케어)</td><td>너겟형</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>솜솜</b><br/><small>Somsom</small></td><td>닭가슴살 슬라이스 · 참치+후코이단</td><td>슬라이스 30g</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>골든스푼</b></td><td>멀티미트 져키</td><td>져키</td><td><span class="pill dog">강아지</span></td></tr>
+        <tr><td><b>진자사 츄르</b><br/><small>Jinzsah Churu</small></td><td>2021 출시 · 츄르형 영양 간식</td><td>레토르트(츄르)</td><td><span class="pill both">강아지·고양이</span></td></tr>
+        <tr><td><b>고양이 라인</b></td><td>참치·해산물 기반 트릿</td><td>져키 · 트릿</td><td><span class="pill cat">고양이</span></td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--ink-dim);font-size:13px;margin:10px 0 0">
+       <b>아스쿠 (Asuku) 별도 도메인 운영</b>: <a href="http://asuku.co.kr">asuku.co.kr</a>로 자체 브랜드 사이트 별도 운영.
+      유통몰(강아지대통령·펫프렌즈)에서 펠리쿠치나 상품명이 "<b>아스쿠 펠리쿠치나 소고기</b>" 식으로 표기되는 점으로 보아
+      <b>아스쿠 = 유통/리테일용 엄브렐러 브랜드</b>로 추정.
+    </p>
+  </div>
+</section>
+
+<!-- Export map -->
+<section>
+  <h2 class="title">수출 지역</h2>
+  <div class="map">
+    <div class="country"><div class="flag"></div>홍콩<span class="yr">2007~</span></div>
+    <div class="country"><div class="flag"></div>일본<span class="yr">2012~</span></div>
+    <div class="country"><div class="flag"></div>미국<span class="yr">2019~</span></div>
+    <div class="country"><div class="flag"></div>태국<span class="yr">2021~</span></div>
+    <div class="country"><div class="flag"></div>인도네시아<span class="yr">2021~</span></div>
+    <div class="country"><div class="flag"></div>베트남<span class="yr">2022~</span></div>
+  </div>
+</section>
+
+<!-- Permits / Licenses -->
+<section>
+  <h2 class="title">공장 인허가 (사실 기반 분류)</h2>
+  <div class="grid cols-3">
+    <div class="card" style="border-color:#9be7c466">
+      <h2 style="color:#9be7c4"> 직접 확인 (1차 자료)</h2>
+      <ul style="margin:6px 0 0;padding-left:18px;color:#d6f5e6">
+        <li><b>HACCP 인증 (사료)</b><br/><small style="color:var(--ink-dim)">2015 국내 최초 펫푸드 HACCP — 회사 공식 표명</small></li>
+        <li><b>사업자등록</b> 129-81-68275</li>
+        <li><b>공장 소재</b> 안성 장원산업단지</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:#7cc3ff66">
+      <h2 style="color:#7cc3ff"> 법령상 필수 (보유 추정)</h2>
+      <ul style="margin:6px 0 0;padding-left:18px;color:#cfe6ff">
+        <li>사료관리법 <b>사료제조업 등록</b><br/><small style="color:var(--ink-dim)">경기도 등록 의무</small></li>
+        <li><b>사료 성분등록</b> (제품별)</li>
+        <li><b>공장등록증</b> (산업단지 입주)</li>
+      </ul>
+      <small style="color:var(--ink-dim)">정상영업 사실로부터 보유 추정<br/>등록번호는 공개되지 않음</small>
+    </div>
+    <div class="card" style="border-color:#ffb86b66">
+      <h2 style="color:#ffb86b"> 미언급 / 비보유 추정</h2>
+      <ul style="margin:6px 0 0;padding-left:18px;color:#ffd9ad">
+        <li>ISO 9001 / 22000 / 22716</li>
+        <li>GMP+ (사료안전 국제표준)</li>
+        <li>FSSC 22000 / BRC</li>
+      </ul>
+      <small style="color:var(--ink-dim)">자발적 글로벌 인증은 보유 시 영업자료에 표기하는 것이 통상</small>
+    </div>
+  </div>
+</section>
+
+<!-- Export licenses -->
+<section>
+  <h2 class="title">국가별 수출 라이선스</h2>
+  <div class="panel">
+    <table class="products">
+      <thead><tr><th>국가</th><th>진출</th><th>필수 등록·허가</th><th>HDC 보유 확인</th></tr></thead>
+      <tbody>
+        <tr><td> <b>홍콩</b></td><td>2007~</td><td>AFCD 시설등록 불요 · 수입자 import permit · 한국 검역증</td><td><span class="pill">검역증 이력 추정</span></td></tr>
+        <tr><td> <b>일본</b></td><td>2012~</td><td>飼料安全法 · 動物検疫所 검역증 · 일본 PFMA 가이드(자발)</td><td><span class="pill">검역 통과 추정</span></td></tr>
+        <tr><td> <b>미국</b></td><td>2019~</td><td><b>FDA Food Facility Registration</b>(2년 갱신, 의무) · FSMA 예방관리(PCQI) · <b>U.S. Agent 지정</b> · Prior Notice · USDA APHIS VS-16(수입자) · AAFCO 라벨</td><td><span class="pill" style="border-color:#9be7c4;color:#9be7c4">FDA 시설등록 보유 추정</span><br/><small>등록번호 비공개</small></td></tr>
+        <tr><td> <b>태국</b></td><td>2021~</td><td>DLD Animal Feed Quality Control Act · import registration · 태국어 라벨</td><td><span class="pill">DLD 등록 통과 추정</span></td></tr>
+        <tr><td> <b>인도네시아</b></td><td>2021~</td><td>Ditjen PKH(농업부 축산총국) 사료 import registration · BKIPM 검역</td><td><span class="pill">MoA 등록 통과 추정</span></td></tr>
+        <tr><td> <b>베트남</b></td><td>2022~</td><td><b>MARD 사료등록</b> (Circular 21/2019, Decree 13/2020) · <b>5년 유효, 관보 공시</b> · 수입자 import permit</td><td><span class="pill">MARD 등록 보유 추정</span><br/><small>관보 직접 확인 미실시</small></td></tr>
+      </tbody>
+    </table>
+    <div class="legend">
+      <span> 공통: 한국 농림축산검역본부 <b>수출검역증명서</b> (선적별 발급, 영구 라이선스 아님)</span>
+    </div>
+    <p style="color:var(--ink-dim);font-size:13px;margin:10px 0 0"> 6개국 수출실적은 각 국가 최소 시설등록·검역요건 통과를 의미하나, <b>회사가 라이선스 번호·갱신일을 공개하지 않아 시점별 유효성은 직접 확인 불가</b>.</p>
+
+    <div class="card" style="margin-top:14px;border-color:#ffb86b66">
+      <h2 style="color:#ffb86b">정부 DB 직접 조회 결과 (2026-05-08)</h2>
+      <ul style="margin:6px 0 0;padding-left:18px;color:#ffd9ad;line-height:1.7">
+        <li><b> 베트남 MARD</b> (dvc.mard.gov.vn) — 응답 timeout. site:gov.vn 검색 0건. <b>등록 매칭 실패</b></li>
+        <li><b> 인니 Ditjen PKH SIMPOL</b> — 443개 등록 명단 검토, HDC·Felicucina·9개 브랜드 모두 <b>0건 매칭</b>. 펫푸드 카테고리는 전수가 아닐 가능성</li>
+        <li><b> 태국 DLD efeed</b> — 라이선스/등록증 조회 시스템 응답 정상, <b>0건 매칭</b></li>
+      </ul>
+      <p style="color:var(--ink-dim);font-size:13px;margin:8px 0 0">→ 정부 DB는 보통 <b>현지 수입자(distributor) 명의</b>로 등록되므로 "HDC/Felicucina" 키워드만으로는 누락 가능성. 정확 확인을 위해서는 현지 수입자(Pet Line HK / Taily Buddy TH / Vina Leaders VN 등) 상호로 재조회 필요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Research plan -->
+<section>
+  <h2 class="title">추가 조사 우선순위 (계획)</h2>
+  <div class="panel">
+    <table class="products">
+      <thead><tr><th>Pri</th><th>카테고리</th><th>조사 방법</th><th>교차검증</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3"> 高</span></td><td>3년 매출 추이·영업이익·부채비율</td><td>나이스비즈인포 / 잡코리아 / 캐치</td><td>高</td></tr>
+        <tr><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3"> 高</span></td><td>OEM vs 자체브랜드 매출 비중</td><td>식약처 사료성분등록 + PB 제품 라벨 추적</td><td>中</td></tr>
+        <tr><td><span class="pill" style="border-color:#ff8fb3;color:#ff8fb3"> 高</span></td><td>특허·상표 출원 현황</td><td>KIPRIS (출원인=에이치디씨/홋가이도푸즈)</td><td>高 (1차)</td></tr>
+        <tr><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b"> 中</span></td><td>언론보도·정부지원 R&amp;D 수혜</td><td>네이버뉴스 / 농림축산식품부</td><td>中</td></tr>
+        <tr><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b"> 中</span></td><td>경쟁사 비교</td><td>하림펫푸드·우리와·대주산업·로얄캐닌</td><td>高</td></tr>
+        <tr><td><span class="pill" style="border-color:#ffb86b;color:#ffb86b"> 中</span></td><td>소비자 평판</td><td>스마트스토어·쿠팡 리뷰·펫커뮤니티</td><td>中</td></tr>
+        <tr><td><span class="pill" style="border-color:#9be7c4;color:#9be7c4"> 低</span></td><td>지분구조·주주</td><td>비상장 (유료 신용평가 리포트만)</td><td>低</td></tr>
+        <tr><td><span class="pill" style="border-color:#9be7c4;color:#9be7c4"> 低</span></td><td>수출 라이선스 번호 확정</td><td>베트남 관보 / FDA 직접 문의</td><td>低</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Strengths -->
+<section>
+  <h2 class="title">차별점 / 강점 요약</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <h2>제조·품질</h2>
+      <ul>
+        <li><b>국내 최초 펫푸드 HACCP 인증</b> (2015)</li>
+        <li>휴먼그레이드 원료 · 저온가공</li>
+        <li>세미모이스트·레토르트·져키 등 멀티 라인</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>비즈니스</h2>
+      <ul>
+        <li>국내 식품·생활용품 빅5 OEM 레퍼런스 (CJ·풀무원·LG생건·동원F&amp;B·애경)</li>
+        <li>수직계열화: 원료→생산→유통→수출 일원화</li>
+        <li>아시아·북미 6개국 이상 수출망</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div><!-- /tab-fact -->
+
+
+<!-- Collab tab -->
+<div id="tab-collab" class="tab-content">
+  <section style="margin-top:0">
+    <h2 class="title">HDC × 제로랩스 5대 협업 구조</h2>
+    
+    <div class="news-card" style="border-left-color:#9be7c4">
+      <div class="meta">
+        <span class="news-tag" style="background:rgba(155,231,196,.15);color:#9be7c4">시너지 1</span>
+        <span>제조 역량</span>
+      </div>
+      <h3 style="color:#d6f5e6">HDC 자체 공장라인을 통한 제품 출시</h3>
+      <p>제로랩스의 신제품 기획력과 HDC의 대형 제조 인프라(레토르트, 습식 등)를 결합하여 안정적이고 퀄리티 높은 프리미엄 간식 라인업을 공동으로 출시합니다.</p>
+    </div>
+
+    <div class="news-card" style="border-left-color:#7cc3ff">
+      <div class="meta">
+        <span class="news-tag" style="background:rgba(124,195,255,.15);color:#cfe6ff">시너지 2</span>
+        <span>미국 진출</span>
+      </div>
+      <h3 style="color:#cfe6ff">FDA 인증을 통한 미국 수출</h3>
+      <p>HDC가 기확보한 공장 및 제품의 미국 FDA 인증 라인을 활용하여, 제로랩스의 트렌디한 펫푸드를 거대한 북미 시장에 즉각적으로 수출합니다.</p>
+    </div>
+
+    <div class="news-card" style="border-left-color:#ff8fb3">
+      <div class="meta">
+        <span class="news-tag" style="background:rgba(255,143,179,.15);color:#ffd0e1">시너지 3</span>
+        <span>글로벌 확장</span>
+      </div>
+      <h3 style="color:#ffd6e3">HDC 해외 수출망 활용</h3>
+      <p>미국 외에도 홍콩, 태국 등 HDC가 십수년간 개척해 둔 글로벌 현지 디스트리뷰터 파이프라인에 제로랩스 브랜드를 탑재시켜 아시아 시장에 동반 진출합니다.</p>
+    </div>
+
+    <div class="news-card" style="border-left-color:#ffb86b">
+      <div class="meta">
+        <span class="news-tag" style="background:rgba(255,184,107,.15);color:#ffd9ad">시너지 4</span>
+        <span>국내 세일즈</span>
+      </div>
+      <h3 style="color:#ffd9ad">국내 유통망 크로스</h3>
+      <p>HDC의 오프라인 B2B 거점(대형마트, 동물병원 등)과 제로랩스의 강력한 이커머스 B2C 세일즈 역량을 교환하여 전방위적인 국내 유통망을 장악합니다.</p>
+    </div>
+
+    <div class="news-card" style="border-left-color:#e6edf7">
+      <div class="meta">
+        <span class="news-tag" style="background:rgba(230,237,247,.15);color:#ffffff">시너지 5</span>
+        <span>마케팅</span>
+      </div>
+      <h3 style="color:#ffffff">인지도 높은 제품 콜라보</h3>
+      <p>대중적으로 인지도가 높은 브랜드나 IP와의 적극적인 콜라보레이션을 통해 양사의 화제성을 극대화하고, 신규 MZ세대 펫팸족 고객층을 폭발적으로 유입시킵니다.</p>
+    </div>
+  </section>
+</div><!-- /tab-collab -->
+
+<footer>
+  <div class="src">
+    출처:
+    <a href="http://hdcpet.com/en/hdc/">hdcpet.com (회사소개)</a>·
+    <a href="https://en.hdcpet.com/Corporate-history">en.hdcpet.com (연혁)</a>·
+    <a href="https://hdcbiz.imweb.me/">hdcbiz.imweb.me (B2B)</a>·
+    <a href="https://www.saramin.co.kr/">사람인 기업정보</a>·
+    <a href="https://www.jobkorea.co.kr/">잡코리아</a>
+  </div>
+  <div style="margin-top:6px">2026-05-08 조사 · 1차 자료(팩트)와 2차 정보(뉴스·추정)를 탭으로 분리</div>
+</footer>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tab);
+        b.setAttribute('aria-selected', b.dataset.tab === tab);
+      });
+      document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.toggle('active', c.id === 'tab-' + tab);
+      });
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+</script>
+
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      fontFamily: "'Noto Sans KR', system-ui, sans-serif",
+      primaryColor: '#161d2e',
+      primaryTextColor: '#e6edf7',
+      primaryBorderColor: '#1f2940',
+      lineColor: '#3c4d72',
+      secondaryColor: '#102233',
+      tertiaryColor: '#0e1422'
+    },
+    flowchart: { curve: 'basis', htmlLabels: true, padding: 8 }
+  });
+</script>
+</body>
+</html>
